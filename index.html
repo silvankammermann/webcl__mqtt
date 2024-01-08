@@ -17,23 +17,15 @@
 
     <script>
       // Uses public MQTT broker
-      const client = mqtt("broker.hivemq.com", 8000, "clientId-" + Math.random().toString(16).substr(2, 8));
+      // const client = mqtt("broker.hivemq.com", 8000, "clientId-" + Math.random().toString(16).substr(2, 8));
 
       // Uncomment to use local MQTT broker
-      // const client = mqtt("localhost", 8083, "clientId-" + Math.random().toString(16).substr(2, 8));
+      const client = mqtt("localhost", 8083, "clientId-" + Math.random().toString(16).substr(2, 8));
   
       client.onMessageArrived = msg => {
         console.log(msg);
         const messages = document.querySelector(".messages");
         messages.innerHTML += `<span>Topic: ${msg.destinationName} | Message: ${msg.payloadString}</span><br/>`;
-      }
-      
-      function connect() {
-        client.connect({
-          onSuccess: () => {
-            console.log("connected");
-          }
-        });
       }
 
       function subscribe() {
@@ -57,9 +49,7 @@
         <label for="message">Message</label>
         <input type="text" name="message" class="form-control" id="message" />
         
-        <button type="button" class="btn btn-primary" onclick="connect()">Connect</button>
         <button type="button" class="btn btn-primary" onclick="subscribe()">Subscribe</button>
-        <button type="button" class="btn btn-primary" onclick="unsubscribe()">Unsubscribe</button>
         <button type="button" class="btn btn-primary" onclick="publish()">Publish</button>
     </form>
   </div>
